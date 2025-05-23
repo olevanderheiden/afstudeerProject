@@ -1,8 +1,8 @@
 
 # BEGIN WordPress
-# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
-# dynamically generated, and should only be modified via WordPress filters.
-# Any changes to the directives between these markers will be overwritten.
+# De richtlijnen (regels) tussen "BEGIN WordPress" en "END WordPress" worden
+# dynamisch gegenereerd en zouden alleen aangepast mogen worden via WordPress filters.
+# Alle wijzigingen aan de richtlijnen tussen deze markeringen worden overschreven.
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
