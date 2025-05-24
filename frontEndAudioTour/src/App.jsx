@@ -1,6 +1,6 @@
 import React from "react";
 import "./prototype1.css";
-import AudioTourList from "./AudioToorList";
+import AudioTourList from "./assets/AudioTourList";
 
 function App() {
   return (
