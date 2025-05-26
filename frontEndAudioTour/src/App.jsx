@@ -15,11 +15,6 @@ function App() {
               alt="Digitaal Toegankelijk logo"
               className="header-logo"
             />
-            <span className="header-title">
-              Digitaal
-              <br />
-              Toegankelijk
-            </span>
           </div>
           <nav className="nav-links">
             <a href="#trainingen">Trainingen</a>
