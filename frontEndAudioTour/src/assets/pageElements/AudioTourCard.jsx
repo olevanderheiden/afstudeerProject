@@ -30,7 +30,7 @@ const AudioTourCard = ({
         alt={`Afbeelding van ${item.name}`}
       />
       <p className={styles.cardName}>{item.name}</p>
-      <p className={styles.sectionLabel}>{item.section}</p>
+      <p className={styles.sectionLabel}>{item.name}</p>
       <button
         onClick={handleButtonClick}
         disabled={!item.audio || isTourPlaying}
