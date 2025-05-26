@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "../styles/AudioTourList.module.css";
 import AudioTourSection from "./pageElements/AudioTourSection";
+import { fetchAudioTours } from "../utils/apiCalls";
 
 const SECTION_LABELS = {
   ons_team: "Ons team",
@@ -21,20 +22,8 @@ function AudioTourList() {
   const cardRefs = useRef({});
 
   useEffect(() => {
-    fetch("http://backend.test/wp-json/wp/v2/audio_tour?per_page=1")
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        const total = res.headers.get("X-WP-Total");
-        return { total, promise: res.json() };
-      })
-      .then(async ({ total }) => {
-        const allRes = await fetch(
-          `http://backend.test/wp-json/wp/v2/audio_tour?per_page=${total}`
-        );
-        if (!allRes.ok) throw new Error("Network response was not ok");
-        return allRes.json();
-      })
-      .then((data) => setTours(data))
+    fetchAudioTours()
+      .then(setTours)
       .catch((err) => setError(err.message));
   }, []);
 
@@ -83,7 +72,6 @@ function AudioTourList() {
 
   // Handle "Tour starten" with pause/resume
   const handleTourStart = () => {
-    // If tour is playing, pause it
     if (tourPlaying && !tourPaused) {
       const currentItem = tourQueue[tourStep];
       if (currentItem) {
@@ -96,7 +84,6 @@ function AudioTourList() {
       setTourPlaying(false);
       return;
     }
-    // If tour is paused, resume it
     if (tourPaused) {
       setTourPaused(false);
       setTourPlaying(true);
@@ -109,7 +96,6 @@ function AudioTourList() {
       }
       return;
     }
-    // Otherwise, start a new tour
     const queue = SECTION_ORDER.flatMap((key) => grouped[key]).filter(
       (item) => item.audio
     );
@@ -139,7 +125,7 @@ function AudioTourList() {
     if (!audio) return;
 
     const handleEnded = () => {
-      if (tourPaused) return; // Don't advance if paused
+      if (tourPaused) return;
       if (tourStep < tourQueue.length - 1) {
         setTourStep((step) => step + 1);
       } else {
@@ -185,7 +171,6 @@ function AudioTourList() {
   // Pass refs down so cards register their audio elements and card DOM nodes
   const handleAudioRef = (id, ref) => {
     audioRefs.current[id] = ref;
-    // Also store the card DOM node for focus/scroll
     if (ref && ref.closest) {
       cardRefs.current[id] = ref.closest(`.${styles.card}`) || ref.parentNode;
     }
@@ -197,7 +182,6 @@ function AudioTourList() {
   return (
     <main className={styles.main}>
       <div className={styles.layout}>
-        {/* Left column: Tour starten button */}
         <div className={styles.leftCol}>
           <button
             className={styles.tourStartenBtn}
@@ -211,7 +195,6 @@ function AudioTourList() {
               : "Tour starten"}
           </button>
         </div>
-        {/* Center column: Sections */}
         <div className={styles.centerCol}>
           {SECTION_ORDER.map((sectieKey) =>
             grouped[sectieKey].length ? (
