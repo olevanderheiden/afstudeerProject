@@ -14,10 +14,12 @@
 }
 
 .sectionContent {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 32px;
-  justify-content: center;
-  max-width: 976px; /* 4 cards per row */
+  justify-items: center;
+  max-width: 1200px;
   width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }

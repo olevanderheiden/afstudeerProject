@@ -18,6 +18,7 @@ function AudioTourList() {
   const [tourQueue, setTourQueue] = useState([]);
   const [tourStep, setTourStep] = useState(0);
   const audioRefs = useRef({});
+  const cardRefs = useRef({});
 
   useEffect(() => {
     fetch("http://backend.test/wp-json/wp/v2/audio_tour?per_page=1")
@@ -169,9 +170,25 @@ function AudioTourList() {
     }
   }, [tourStep, tourPlaying, tourQueue]);
 
-  // Pass refs down so cards register their audio elements
+  // Focus and scroll the active card into view when playingIndex changes
+  useEffect(() => {
+    if (playingIndex && cardRefs.current[playingIndex]) {
+      cardRefs.current[playingIndex].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
+      cardRefs.current[playingIndex].focus();
+    }
+  }, [playingIndex]);
+
+  // Pass refs down so cards register their audio elements and card DOM nodes
   const handleAudioRef = (id, ref) => {
     audioRefs.current[id] = ref;
+    // Also store the card DOM node for focus/scroll
+    if (ref && ref.closest) {
+      cardRefs.current[id] = ref.closest(`.${styles.card}`) || ref.parentNode;
+    }
   };
 
   if (error) return <div>Error: {error}</div>;

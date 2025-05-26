@@ -14,15 +14,27 @@ const AudioTourCard = ({
     if (audioRef.current && item.audio) onAudioRef(item.id, audioRef.current);
   }, [audioRef, item.id, onAudioRef, item.audio]);
 
+  useEffect(() => {
+    if (isActive) {
+      setTimeout(() => {
+        audioRef.current?.closest(`.${styles.card}`)?.focus();
+      }, 100);
+    }
+  }, [isActive]);
+
   const handleButtonClick = () => {
     if (!item.audio) return;
     onPlay(item.id);
   };
 
+  // Only disable the button if the card is not active and the tour is playing
+  const isButtonDisabled = !item.audio || (isTourPlaying && !isActive);
+
   return (
     <div
       className={`${styles.card} ${isActive ? styles.activeCard : ""}`}
-      tabIndex={-1}
+      tabIndex={isActive ? 0 : -1}
+      aria-live={isActive ? "polite" : undefined}
     >
       <img
         className={styles.cardImg}
@@ -30,13 +42,12 @@ const AudioTourCard = ({
         alt={`Afbeelding van ${item.name}`}
       />
       <p className={styles.cardName}>{item.name}</p>
-      <p className={styles.sectionLabel}>{item.name}</p>
       <button
         onClick={handleButtonClick}
-        disabled={!item.audio || isTourPlaying}
+        disabled={isButtonDisabled}
         className={`${styles.cardButton} ${
-          !item.audio ? styles.unavailableBtn : ""
-        }`}
+          isActive ? styles.cardButtonActive : ""
+        } ${!item.audio ? styles.unavailableBtn : ""}`}
       >
         {item.audio ? (isActive ? "Pauzeer" : "Afspelen") : "Niet beschikbaar"}
       </button>
