@@ -1,25 +1,10 @@
-.section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 48px;
-}
-
-.sectionTitle {
-  font-size: 2rem;
-  margin-bottom: 24px;
-  color: #111;
-  text-align: center;
-}
-
 .sectionContent {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 32px;
-  justify-items: center;
-  max-width: 1200px;
-  width: 100%;
+  justify-content: center;
+  align-items: start;
+  max-width: calc(5 * 220px + 4 * 32px);
   margin: 0 auto;
   box-sizing: border-box;
 }

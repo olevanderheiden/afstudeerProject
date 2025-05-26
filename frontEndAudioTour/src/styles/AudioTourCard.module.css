@@ -28,8 +28,11 @@
 
 .cardName {
   font-weight: 500;
-  margin: 0 0 12px 0;
+  margin: 12px 0 12px 0;
   text-align: center;
+  position: static;
+  display: block;
+  color: #111;
 }
 
 .sectionLabel {
