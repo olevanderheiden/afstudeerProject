@@ -1,8 +1,8 @@
 .card {
   background: #fff;
-  border-radius: 18px;
+  border-radius: var(--border-radius, 18px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  width: 220px;
+  width: var(--card-width, 220px);
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,8 @@
   transition: box-shadow 0.2s, border 0.2s;
   border: 1px solid #eee;
   margin-bottom: 0;
+  min-height: 370px;
+  box-sizing: border-box;
 }
 
 .activeCard {
@@ -52,6 +54,7 @@
   cursor: pointer;
   font-size: 1.5rem;
   transition: background 0.2s, color 0.2s;
+  margin-top: auto;
 }
 
 .cardButton:hover:not(:disabled),
@@ -70,4 +73,11 @@
 .cardAudio {
   width: 100%;
   margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    width: 98vw;
+    max-width: 340px;
+  }
 }
