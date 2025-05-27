@@ -7,7 +7,11 @@ export async function fetchAudioTours() {
   let useCache = false;
 
   // Use cache if less than 10 minutes old
-  if (cached && cachedTime && Date.now() - cachedTime < 10 * 60 * 1000) {
+  if (
+    cached &&
+    cachedTime &&
+    Date.now() - cachedTime < 7 * 24 * 60 * 60 * 1000
+  ) {
     useCache = true;
   }
 
