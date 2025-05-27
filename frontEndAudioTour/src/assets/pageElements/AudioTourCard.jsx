@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styles from "../../styles/AudioTourCard.module.css";
 
 const AudioTourCard = ({
@@ -9,6 +9,7 @@ const AudioTourCard = ({
   onAudioRef,
 }) => {
   const audioRef = useRef(null);
+  const [showDescription, setShowDescription] = useState(false);
 
   useEffect(() => {
     if (audioRef.current && item.audio) onAudioRef(item.id, audioRef.current);
@@ -27,7 +28,6 @@ const AudioTourCard = ({
     onPlay(item.id);
   };
 
-  // Only disable the button if the card is not active and the tour is playing
   const isButtonDisabled = !item.audio || isTourPlaying;
 
   return (
@@ -41,7 +41,24 @@ const AudioTourCard = ({
         src={item.image}
         alt={`Afbeelding van ${item.name}`}
       />
+      {/* Functie field (optional, above name) */}
+      {item.functie && <p className={styles.cardFunctie}>{item.functie}</p>}
       <p className={styles.cardName}>{item.name}</p>
+      {/* Toggle beschrijving */}
+      {item.beschrijving && (
+        <>
+          <button
+            className={styles.toggleBeschrijvingBtn}
+            onClick={() => setShowDescription((v) => !v)}
+            type="button"
+          >
+            {showDescription ? "Verberg beschrijving" : "Toon beschrijving"}
+          </button>
+          {showDescription && (
+            <p className={styles.cardBeschrijving}>{item.beschrijving}</p>
+          )}
+        </>
+      )}
       <button
         onClick={handleButtonClick}
         disabled={isButtonDisabled}

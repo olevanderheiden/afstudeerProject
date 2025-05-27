@@ -42,6 +42,8 @@ function AudioTourList() {
         image: tour.acf.afbeelding?.url,
         audio: tour.acf.audio?.url,
         section: SECTION_LABELS[sectie],
+        functie: tour.acf.functie,
+        beschrijving: tour.acf.beschrijving,
       });
     }
   });

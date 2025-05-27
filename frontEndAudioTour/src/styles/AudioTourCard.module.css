@@ -75,6 +75,22 @@
   margin-top: 8px;
 }
 
+.cardFunctie {
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.cardBeschrijving {
+  font-size: 0.98rem;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+  white-space: pre-line;
+}
+
 @media (max-width: 900px) {
   .card {
     width: 98vw;
