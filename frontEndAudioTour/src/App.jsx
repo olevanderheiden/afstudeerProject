@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import AudioTourList from "./assets/AudioTourList";
-import logo from "../public/DT-LogoSide-Primary-Dark.svg";
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
         <div className="header-content">
           <div className="logo-block">
             <img
-              src={logo}
+              src="DT-LogoSide-Primary-Dark.svg"
               alt="Digitaal Toegankelijk logo"
               className="header-logo"
             />

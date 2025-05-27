@@ -1,5 +1,5 @@
-const API_BASE_URL = import.meta.env.WORDPRESS_API_URL;
-
+const API_BASE_URL = import.meta.env.VITE_WORDPRESS_API_URL;
+// const API_BASE_URL = "http://backend.test/wp-json/wp/v2";
 export async function fetchAudioTours() {
   // Try localStorage first
   const cached = localStorage.getItem("audioTourData");
@@ -15,6 +15,9 @@ export async function fetchAudioTours() {
   try {
     // Get total count
     const res = await fetch(`${API_BASE_URL}/audio_tour?per_page=1`);
+    console.log(
+      `Fetching audio tours from ${API_BASE_URL} at ${new Date().toISOString()}`
+    );
     if (!res.ok) throw new Error("Network response was not ok");
     const total = res.headers.get("X-WP-Total");
 
