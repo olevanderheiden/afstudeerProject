@@ -28,7 +28,7 @@ const AudioTourCard = ({
   };
 
   // Only disable the button if the card is not active and the tour is playing
-  const isButtonDisabled = !item.audio || (isTourPlaying && !isActive);
+  const isButtonDisabled = !item.audio || isTourPlaying;
 
   return (
     <div
