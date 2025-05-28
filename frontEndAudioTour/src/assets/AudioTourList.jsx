@@ -39,7 +39,7 @@ function AudioTourList() {
       grouped[sectie].push({
         id: tour.id,
         name: tour.acf.naam || tour.title.rendered,
-        image: tour.acf.afbeelding?.url,
+        visuals: tour.acf.visuals,
         audio: tour.acf.audio?.url,
         section: SECTION_LABELS[sectie],
         functie: tour.acf.functie,
