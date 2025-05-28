@@ -1,12 +1,12 @@
 const API_BASE_URL = import.meta.env.VITE_WORDPRESS_API_URL;
-// const API_BASE_URL = "http://backend.test/wp-json/wp/v2";
+
 export async function fetchAudioTours() {
   // Try localStorage first
   const cached = localStorage.getItem("audioTourData");
   const cachedTime = localStorage.getItem("audioTourDataTime");
   let useCache = false;
 
-  // Use cache if less than 10 minutes old
+  // Use cache if less than 7 days old
   if (
     cached &&
     cachedTime &&
@@ -15,13 +15,9 @@ export async function fetchAudioTours() {
     useCache = true;
   }
 
-  // Always check for updates in the background
   try {
     // Get total count
     const res = await fetch(`${API_BASE_URL}/audio_tour?per_page=1`);
-    console.log(
-      `Fetching audio tours from ${API_BASE_URL} at ${new Date().toISOString()}`
-    );
     if (!res.ok) throw new Error("Network response was not ok");
     const total = res.headers.get("X-WP-Total");
 
@@ -30,22 +26,93 @@ export async function fetchAudioTours() {
     if (!allRes.ok) throw new Error("Network response was not ok");
     const data = await allRes.json();
 
+    // --- Fetch media for visuals and audio ---
+    // Collect all unique visuals and audio IDs (numbers only)
+    const visualsIds = [
+      ...new Set(
+        data
+          .map((tour) => tour.acf?.visuals)
+          .filter((id) => typeof id === "number")
+      ),
+    ];
+    const audioIds = [
+      ...new Set(
+        data
+          .map((tour) => tour.acf?.audio)
+          .filter((id) => typeof id === "number")
+      ),
+    ];
+
+    let mediaMap = {};
+    const allMediaIds = [...new Set([...visualsIds, ...audioIds])];
+    if (allMediaIds.length > 0) {
+      const apiBase = API_BASE_URL.replace(/\/wp\/v2$/, "");
+      const mediaRes = await fetch(
+        `${apiBase}/wp/v2/media?include=${allMediaIds.join(",")}&per_page=100`
+      );
+      const mediaArr = await mediaRes.json();
+      mediaArr.forEach((m) => {
+        mediaMap[m.id] = {
+          url: m.source_url,
+          mime_type: m.mime_type,
+        };
+      });
+    }
+
+    // Attach media info to each tour
+    const toursWithMedia = data.map((tour) => {
+      // Visuals
+      let visuals = null;
+      const visualsId = tour.acf.visuals;
+      if (typeof visualsId === "number" && mediaMap[visualsId]) {
+        visuals = { ...mediaMap[visualsId], id: visualsId };
+      } else if (
+        tour.acf.visuals &&
+        tour.acf.visuals.url &&
+        tour.acf.visuals.mime_type
+      ) {
+        visuals = tour.acf.visuals;
+      }
+
+      // Audio
+      let audio = null;
+      const audioId = tour.acf.audio;
+      if (typeof audioId === "number" && mediaMap[audioId]) {
+        audio = { ...mediaMap[audioId], id: audioId };
+      } else if (
+        tour.acf.audio &&
+        tour.acf.audio.url &&
+        tour.acf.audio.mime_type
+      ) {
+        audio = tour.acf.audio;
+      }
+
+      return {
+        ...tour,
+        acf: {
+          ...tour.acf,
+          visuals,
+          audio,
+        },
+      };
+    });
+
     // Compare with cache
     const cachedData = cached ? JSON.parse(cached) : [];
     const isDifferent =
-      cachedData.length !== data.length ||
-      data.some(
+      cachedData.length !== toursWithMedia.length ||
+      toursWithMedia.some(
         (item, i) => !cachedData[i] || cachedData[i].modified !== item.modified
       );
 
     if (isDifferent) {
-      localStorage.setItem("audioTourData", JSON.stringify(data));
+      localStorage.setItem("audioTourData", JSON.stringify(toursWithMedia));
       localStorage.setItem("audioTourDataTime", Date.now());
-      return data;
+      return toursWithMedia;
     } else if (useCache) {
       return cachedData;
     } else {
-      return data;
+      return toursWithMedia;
     }
   } catch (err) {
     // On error, fallback to cache if available
