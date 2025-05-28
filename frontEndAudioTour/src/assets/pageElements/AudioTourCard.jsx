@@ -59,7 +59,7 @@ const AudioTourCard = ({
     };
   }, [isVideo, item.visuals, item.id, hoverPlay]);
 
-  // Play video on hover (but don't require cursor to stay)
+  // Play video on hover or when tour is going on
   const handleVideoMouseEnter = () => {
     if (!(isActive && isTourPlaying)) {
       setHoverPlay(true);
