@@ -4,11 +4,11 @@ import AudioTourSection from "./pageElements/AudioTourSection";
 import { fetchAudioTours } from "../utils/apiCalls";
 
 const SECTION_LABELS = {
-  ons_team: "Ons team",
+  ons_verhaal: "Ons verhaal",
   over_het_kantoor: "Over het Kantoor",
   onze_filosofie: "Onze filosofie",
 };
-const SECTION_ORDER = ["ons_team", "over_het_kantoor", "onze_filosofie"];
+const SECTION_ORDER = ["ons_verhaal", "over_het_kantoor", "onze_filosofie"];
 
 function AudioTourList() {
   const [tours, setTours] = useState([]);
@@ -29,7 +29,7 @@ function AudioTourList() {
 
   // Group and sort items
   const grouped = {
-    ons_team: [],
+    ons_verhaal: [],
     over_het_kantoor: [],
     onze_filosofie: [],
   };
@@ -47,7 +47,7 @@ function AudioTourList() {
       });
     }
   });
-  grouped.ons_team.sort((a, b) =>
+  grouped.ons_verhaal.sort((a, b) =>
     a.name.localeCompare(b.name, "nl", { sensitivity: "base" })
   );
 
