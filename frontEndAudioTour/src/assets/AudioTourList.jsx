@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "../styles/AudioTourList.module.css";
 import AudioTourSection from "./pageElements/AudioTourSection";
 import { fetchAudioTours } from "../utils/apiCalls";
+import LoadingBar from "./pageElements/LoadingBar";
 
 const SECTION_LABELS = {
   ons_verhaal: "Ons verhaal",
@@ -26,6 +27,30 @@ function AudioTourList() {
       .then(setTours)
       .catch((err) => setError(err.message));
   }, []);
+
+  useEffect(() => {
+    if (tours.length) {
+      // Preload all audio files
+      tours.forEach((tour) => {
+        if (tour.acf?.audio?.url) {
+          const audio = new window.Audio();
+          audio.src = tour.acf.audio.url;
+          audio.preload = "auto";
+        }
+      });
+      // Preload all video files
+      tours.forEach((tour) => {
+        if (
+          tour.acf?.visuals?.mime_type?.startsWith("video") &&
+          tour.acf.visuals.url
+        ) {
+          const video = document.createElement("video");
+          video.src = tour.acf.visuals.url;
+          video.preload = "auto";
+        }
+      });
+    }
+  }, [tours]);
 
   // Group and sort items
   const grouped = {
@@ -179,7 +204,7 @@ function AudioTourList() {
   };
 
   if (error) return <div>Error: {error}</div>;
-  if (!tours.length) return <div>Loading or no items found.</div>;
+  if (!tours.length) return <LoadingBar />;
 
   return (
     <main className={styles.main}>
