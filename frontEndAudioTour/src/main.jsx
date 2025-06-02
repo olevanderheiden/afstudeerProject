@@ -5,7 +5,7 @@ import App from "./App.jsx";
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/service-worker.js");
+    navigator.serviceWorker.register("/afstudeerProject/service-worker.js.");
   });
 }
 
