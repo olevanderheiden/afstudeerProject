@@ -8,7 +8,7 @@ try {
   //Not using the 404 page would result in a 404 error for all pages that are not the home page
   //To prevent this a custom 404 page is created that handles all routing which github pages considres as handling the 404 error
   //it would normally display.
-  copyFileSync("dist/index.html", "dist/404.html");
+  copyFileSync("../dist/index.html", "../dist/404.html");
   console.log("404.html created successfully.");
 } catch (err) {
   console.error("Error creating 404.html:", err);
