@@ -1,20 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_WORDPRESS_API_URL;
 
 export async function fetchAudioTours() {
-  // Try localStorage first
-  const cached = localStorage.getItem("audioTourData");
-  const cachedTime = localStorage.getItem("audioTourDataTime");
-  let useCache = false;
-
-  // Use cache if less than 7 days old
-  if (
-    cached &&
-    cachedTime &&
-    Date.now() - cachedTime < 7 * 24 * 60 * 60 * 1000
-  ) {
-    useCache = true;
-  }
-
   try {
     // Get total count
     const res = await fetch(`${API_BASE_URL}/audio_tour?per_page=1`);
@@ -26,8 +12,7 @@ export async function fetchAudioTours() {
     if (!allRes.ok) throw new Error("Network response was not ok");
     const data = await allRes.json();
 
-    // --- Fetch media for visuals and audio ---
-    // Collect all unique visuals and audio IDs (numbers only)
+    //Aquire id's from wordpress
     const visualsIds = [
       ...new Set(
         data
@@ -60,7 +45,7 @@ export async function fetchAudioTours() {
     }
 
     // Attach media info to each tour
-    const toursWithMedia = data.map((tour) => {
+    return data.map((tour) => {
       // Visuals
       let visuals = null;
       const visualsId = tour.acf.visuals;
@@ -96,27 +81,7 @@ export async function fetchAudioTours() {
         },
       };
     });
-
-    // Compare with cache
-    const cachedData = cached ? JSON.parse(cached) : [];
-    const isDifferent =
-      cachedData.length !== toursWithMedia.length ||
-      toursWithMedia.some(
-        (item, i) => !cachedData[i] || cachedData[i].modified !== item.modified
-      );
-
-    if (isDifferent) {
-      localStorage.setItem("audioTourData", JSON.stringify(toursWithMedia));
-      localStorage.setItem("audioTourDataTime", Date.now());
-      return toursWithMedia;
-    } else if (useCache) {
-      return cachedData;
-    } else {
-      return toursWithMedia;
-    }
   } catch (err) {
-    // On error, fallback to cache if available
-    if (cached) return JSON.parse(cached);
     throw err;
   }
 }

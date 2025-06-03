@@ -139,7 +139,24 @@ function AudioTourList() {
     }
   };
 
-  // Listen for audio end to play next in queue
+  // Helper to force refresh audio file (bypass SW cache)
+  const refreshAudioSrc = async (audioUrl) => {
+    try {
+      const url = new URL(audioUrl, window.location.origin);
+      url.searchParams.set("_cb", Date.now());
+      const response = await fetch(url.toString(), { cache: "reload" });
+      // Check for valid audio MIME type
+      const contentType = response.headers.get("Content-Type") || "";
+      if (!response.ok || !contentType.startsWith("audio/"))
+        throw new Error("Invalid audio response");
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    } catch {
+      return null;
+    }
+  };
+
+  // Listen for audio end/error to play next in queue, with fallback
   useEffect(() => {
     if ((!tourPlaying && !tourPaused) || !tourQueue.length) return;
     const currentItem = tourQueue[tourStep];
@@ -151,6 +168,8 @@ function AudioTourList() {
     const audio = audioRefs.current[currentItem.id];
     if (!audio) return;
 
+    let retried = false;
+
     const handleEnded = () => {
       if (tourPaused) return;
       if (tourStep < tourQueue.length - 1) {
@@ -161,12 +180,28 @@ function AudioTourList() {
       }
     };
 
+    const handleError = async () => {
+      if (!retried) {
+        retried = true;
+        // Try to refresh the audio src (bypass SW cache)
+        const refreshedSrc = await refreshAudioSrc(currentItem.audio);
+        if (refreshedSrc) {
+          audio.src = refreshedSrc;
+          audio.load();
+          audio.play().catch(handleEnded); // If play fails again, skip
+          return;
+        }
+      }
+      // If still fails, skip to next
+      handleEnded();
+    };
+
     audio.addEventListener("ended", handleEnded);
-    audio.addEventListener("error", handleEnded);
+    audio.addEventListener("error", handleError);
 
     return () => {
       audio.removeEventListener("ended", handleEnded);
-      audio.removeEventListener("error", handleEnded);
+      audio.removeEventListener("error", handleError);
     };
   }, [tourPlaying, tourPaused, tourQueue, tourStep]);
 
