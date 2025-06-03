@@ -1,5 +1,5 @@
-const MEDIA_CACHE = "audio-tour-media";
-const SHELL_CACHE = "audio-tour-shell";
+const MEDIA_CACHE = "audio-tour-media-v1";
+const SHELL_CACHE = "audio-tour-shell-v1";
 
 const MEDIA_FILE_TYPES = [
   ".mp3",
