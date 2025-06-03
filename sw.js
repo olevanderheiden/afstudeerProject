@@ -1,2 +1,2 @@
 const a="pre-cache",s="runtime-cache",r=["\\sw.js","\\swRegister.js"],h=true;self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(c=>Promise.all(c.map(t=>caches.delete(t)))).then(()=>caches.open(a).then(c=>c.addAll(r))))});self.addEventListener("fetch",e=>{e.request.url.startsWith(location.origin)&&e.respondWith(caches.match(e.request).then(c=>c||fetch(e.request).then(t=>caches.open(s).then(n=>(n.put(e.request.url,t.clone()),t))).catch(()=>{if(h)return caches.match("/").then(t=>t)})))});
-// 0.ejl8fmnmwwd0.a8dnktv4sj90.kxytmwscnd
+// 0.a52v1gb4tk0.0kx016m84m2f0.pg882mlifwo
