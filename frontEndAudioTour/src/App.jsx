@@ -16,7 +16,9 @@ function App() {
             />
           </div>
           <nav className="nav-links">
-            <a href="#trainingen">Trainingen</a>
+            <a href="https://digitaaltoegankelijk.nl/diensten/trainingen/">
+              Trainingen
+            </a>
             <a href="https://digitaaltoegankelijk.nl/diensten/toegankelijkheidsonderzoeken-audits/">
               Audits
             </a>
