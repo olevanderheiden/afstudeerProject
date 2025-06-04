@@ -71,7 +71,16 @@ const AudioTourCard = ({
     onPlay(item.id);
   };
 
-  const isButtonDisabled = !item.audio || isTourPlaying;
+  // Button logic
+  let buttonText = "Afspelen";
+  let buttonDisabled = !item.audio;
+  if (isActive && isTourPlaying) {
+    buttonText = "Wordt nu afgespeeld";
+    buttonDisabled = true;
+  } else if (isActive) {
+    buttonText = "Pauzeer";
+    buttonDisabled = false;
+  }
 
   return (
     <div
@@ -125,13 +134,16 @@ const AudioTourCard = ({
       )}
       <button
         onClick={handleButtonClick}
-        disabled={isButtonDisabled}
+        disabled={buttonDisabled}
         className={`${styles.cardButton} ${
           isActive ? styles.cardButtonActive : ""
         } ${!item.audio ? styles.unavailableBtn : ""}`}
+        aria-pressed={isActive && !isTourPlaying}
+        tabIndex={0}
       >
-        {item.audio ? (isActive ? "Pauzeer" : "Afspelen") : "Niet beschikbaar"}
+        {item.audio ? buttonText : "Niet beschikbaar"}
       </button>
+
       {item.audio && (
         <audio
           className={styles.cardAudio}
