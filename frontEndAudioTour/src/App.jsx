@@ -47,9 +47,7 @@ function App() {
       </header>
 
       {/* Main Content: Audio Tour */}
-      <main>
-        <AudioTourList />
-      </main>
+      <AudioTourList />
     </div>
   );
 }
