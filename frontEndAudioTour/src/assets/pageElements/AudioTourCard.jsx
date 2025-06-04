@@ -12,7 +12,6 @@ const AudioTourCard = ({
   const [showDescription, setShowDescription] = useState(false);
   const [hoverPlay, setHoverPlay] = useState(false);
 
-  // Helper to check if visuals is a video
   const isVideo =
     item.visuals &&
     item.visuals.mime_type &&
@@ -22,7 +21,6 @@ const AudioTourCard = ({
     if (audioRef.current && item.audio) onAudioRef(item.id, audioRef.current);
   }, [audioRef, item.id, onAudioRef, item.audio]);
 
-  // Play video if: tour is playing this card, or play button is used, or hoverPlay is true
   useEffect(() => {
     if (isVideo && item.visuals) {
       const videoEl = document.getElementById(`video-${item.id}`);
@@ -42,7 +40,6 @@ const AudioTourCard = ({
     }
   }, [isActive, isTourPlaying, isVideo, item.visuals, item.id, hoverPlay]);
 
-  // When video ends after hover, reset to beginning
   useEffect(() => {
     if (!isVideo || !item.visuals) return;
     const videoEl = document.getElementById(`video-${item.id}`);
@@ -59,7 +56,6 @@ const AudioTourCard = ({
     };
   }, [isVideo, item.visuals, item.id, hoverPlay]);
 
-  // Play video on hover or when tour is going on
   const handleVideoMouseEnter = () => {
     if (!(isActive && isTourPlaying)) {
       setHoverPlay(true);
@@ -75,7 +71,7 @@ const AudioTourCard = ({
   let buttonText = "Afspelen";
   let buttonDisabled = !item.audio;
   if (isActive && isTourPlaying) {
-    buttonText = "Wordt nu afgespeeld";
+    buttonText = "Speelt af";
     buttonDisabled = true;
   } else if (isActive) {
     buttonText = "Pauzeer";
@@ -87,6 +83,14 @@ const AudioTourCard = ({
       className={`${styles.card} ${isActive ? styles.activeCard : ""}`}
       tabIndex={isActive ? 0 : -1}
       aria-live={isActive ? "polite" : undefined}
+      style={{
+        resize: "horizontal",
+        overflow: "auto",
+        minWidth: 220,
+        maxWidth: 600,
+        display: "inline-block",
+        verticalAlign: "top",
+      }}
     >
       {/* Visuals: image or video */}
       {item.visuals && isVideo ? (
@@ -99,12 +103,6 @@ const AudioTourCard = ({
           muted
           playsInline
           preload="metadata"
-          style={{
-            objectFit: "cover",
-            borderRadius: "12px",
-            marginBottom: "12px",
-            background: "#f2f2f2",
-          }}
           onMouseEnter={handleVideoMouseEnter}
         />
       ) : item.visuals && item.visuals.url ? (
@@ -114,36 +112,38 @@ const AudioTourCard = ({
           alt={`Afbeelding van ${item.name}`}
         />
       ) : null}
-      {/* Functie field (optional, above name) */}
       {item.functie && <p className={styles.cardFunctie}>{item.functie}</p>}
       <p className={styles.cardName}>{item.name}</p>
-      {/* Toggle beschrijving */}
+
+      {isTourPlaying && isActive && (
+        <div className={styles.nowPlaying}>Nu aan het spelen (tour)</div>
+      )}
+
       {item.beschrijving && (
         <>
           <button
             className={styles.toggleBeschrijvingBtn}
             onClick={() => setShowDescription((v) => !v)}
             type="button"
+            aria-expanded={showDescription}
           >
             {showDescription ? "Verberg beschrijving" : "Toon beschrijving"}
           </button>
           {showDescription && (
-            <p className={styles.cardBeschrijving}>{item.beschrijving}</p>
+            <div className={styles.cardBeschrijving}>{item.beschrijving}</div>
           )}
         </>
       )}
+
       <button
         onClick={handleButtonClick}
         disabled={buttonDisabled}
         className={`${styles.cardButton} ${
           isActive ? styles.cardButtonActive : ""
         } ${!item.audio ? styles.unavailableBtn : ""}`}
-        aria-pressed={isActive && !isTourPlaying}
-        tabIndex={0}
       >
         {item.audio ? buttonText : "Niet beschikbaar"}
       </button>
-
       {item.audio && (
         <audio
           className={styles.cardAudio}
