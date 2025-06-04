@@ -85,7 +85,7 @@ const AudioTourCard = ({
       aria-live={isActive ? "polite" : undefined}
       style={{
         resize: "horizontal",
-        overflow: "auto",
+        overflow: "hidden",
         minWidth: 220,
         maxWidth: 600,
         display: "inline-block",
