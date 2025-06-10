@@ -12,6 +12,7 @@ const SECTION_LABELS = {
 const SECTION_ORDER = ["ons_verhaal", "over_het_kantoor", "onze_filosofie"];
 
 function AudioTourList() {
+  const [allowAutoScroll, setAllowAutoScroll] = useState(true);
   const [tours, setTours] = useState([]);
   const [error, setError] = useState(null);
   const [playingIndex, setPlayingIndex] = useState(null);
@@ -220,13 +221,15 @@ function AudioTourList() {
 
   // Focus and scroll the active card into view when playingIndex changes
   useEffect(() => {
-    if (playingIndex && cardRefs.current[playingIndex]) {
+    if (playingIndex && cardRefs.current[playingIndex] && allowAutoScroll) {
       cardRefs.current[playingIndex].scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "center",
       });
       cardRefs.current[playingIndex].focus();
+    } else {
+      return;
     }
   }, [playingIndex]);
 
@@ -245,6 +248,15 @@ function AudioTourList() {
     <main className={styles.main}>
       <div className={styles.layout}>
         <div className={styles.leftCol}>
+          <button
+            className={styles.tourStartenBtn}
+            onClick={() => setAllowAutoScroll((prev) => !prev)}
+            disabled={false}
+          >
+            {allowAutoScroll
+              ? "Automatisch scrollen uitzetten? (aangeraden voor schermlezers)"
+              : "Automatisch Scrollen aanzetten? (afgeraden voor schermlezers"}
+          </button>
           <button
             className={styles.tourStartenBtn}
             onClick={handleTourStart}
