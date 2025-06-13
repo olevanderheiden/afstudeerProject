@@ -1,21 +1,26 @@
-# Node modules (React frontend)
-frontEndAudioTour/node_modules/
-frontEndAudioTour/.env
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Vite build output
+node_modules
 dist
+dist-ssr
+*.local
+.env
 
 
-# WordPress core files that shouldn't be versioned
-backEnd/wp-config.php
-backEnd/wp-content/uploads/
-backEnd/wp-content/cache/
-backEnd/wp-content/upgrade/
-
-# OS files
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
