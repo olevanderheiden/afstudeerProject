@@ -2,6 +2,42 @@
 
 Dit project gebruikt **WordPress** als backend (voor contentbeheer) en **React (Vite)** als frontend.
 
+## Mappen Structuur
+
+```
+.
+├── public/                  # Statische bestanden (favicon, service worker, logo's)
+│   ├── cropped-DT-Icon-Light-32x32.png
+│   ├── DT-LogoSide-Primary-Dark.svg
+│   └── service-worker.js    # Service worker voor caching van api data en verminderen van laad tijden
+├── src/                     # Broncode van de React-applicatie
+│   ├── App.jsx              # Hoofdcomponent, bevat de navigatie en hoofdinhoud
+│   ├── App.css              # Stijlen voor de hoofdcomponent en navigatie
+│   ├── main.jsx             # Entry point, mount React-app op de pagina
+│   ├── index.css            # Stijlen die door de hele applicatie worden toegepast
+│   ├── assets/              # React componenten en assets
+│   │   ├── AudioTourList.jsx        # Hoofdcomponent voor de audiotour-lijst
+│   │   └── pageElements/           # Herbruikbare UI-componenten
+│   │       ├── AudioTourCard.jsx       # Kaart voor individuele audiotour
+│   │       ├── AudioTourSection.jsx    # Sectie met meerdere kaarten
+│   │       └── LoadingBar.jsx          # Laadbalk component voor wanneer de applicatie data laadt
+│   ├── styles/               # CSS modules voor component-specifieke stijlen
+│   │   ├── AudioTourCard.module.css
+│   │   ├── AudioTourList.module.css
+│   │   ├── AudioTourSection.module.css
+│   │   └── LoadingBar.module.css
+│   └── utils/
+│       └── apiCalls.js       # Functies voor het ophalen van data uit de WordPress API
+├── index.html                # HTML bestand die alle js code laadt
+├── vite.config.js            # Vite configuratiebestand
+├── eslint.config.js          # ESLint configuratiebestand
+├── package.json              # Project metadata en scripts
+├── copy404.js                # Script om index.html te kopiëren naar 404.html voor GitHub Pages routing
+├── .envExample               # Voorbeeld van de benodigde omgevingsvariabelen
+├── .gitignore                # Toond bestanden en mappen die niet in git moeten komen zoals .env
+└── README.md                 # Projectdocumentatie (dit bestand)
+```
+
 ## Ontwikkeling
 
 - **WordPress**: Draait op een server van mijn opdracht gever en is niet (meer) te vinden in dit project, check audio test verise voor hoe de word press bestanden er uit zagen.)
