@@ -5,15 +5,14 @@ Dit project gebruikt **WordPress** als backend (voor contentbeheer) en **React (
 ## Mappen Structuur
 
 ```
-.
 ├── public/                  # Statische bestanden (favicon, service worker, logo's)
 │   ├── cropped-DT-Icon-Light-32x32.png
 │   ├── DT-LogoSide-Primary-Dark.svg
-│   └── service-worker.js    # Service worker voor caching van api data en verminderen van laad tijden
+│   └── service-worker.js    # Service worker voor caching van API data en verminderen van laadtijden
 ├── src/                     # Broncode van de React-applicatie
 │   ├── App.jsx              # Hoofdcomponent, bevat de navigatie en hoofdinhoud
 │   ├── App.css              # Stijlen voor de hoofdcomponent en navigatie
-│   ├── main.jsx             # Entry point, mount React-app op de pagina
+│   ├── main.jsx             # Entry point, mounts React-app op de pagina
 │   ├── index.css            # Stijlen die door de hele applicatie worden toegepast
 │   ├── assets/              # React componenten en assets
 │   │   ├── AudioTourList.jsx        # Hoofdcomponent voor de audiotour-lijst
@@ -28,13 +27,13 @@ Dit project gebruikt **WordPress** als backend (voor contentbeheer) en **React (
 │   │   └── LoadingBar.module.css
 │   └── utils/
 │       └── apiCalls.js       # Functies voor het ophalen van data uit de WordPress API
-├── index.html                # HTML bestand die alle js code laadt
+├── index.html                # HTML bestand dat alle Javascript code laadt
 ├── vite.config.js            # Vite configuratiebestand
 ├── eslint.config.js          # ESLint configuratiebestand
 ├── package.json              # Project metadata en scripts
 ├── copy404.js                # Script om index.html te kopiëren naar 404.html voor GitHub Pages routing
 ├── .envExample               # Voorbeeld van de benodigde omgevingsvariabelen
-├── .gitignore                # Toond bestanden en mappen die niet in git moeten komen zoals .env
+├── .gitignore                # Toont bestanden en mappen die niet in GIT moeten komen zoals .env
 └── README.md                 # Projectdocumentatie (dit bestand)
 ```
 
