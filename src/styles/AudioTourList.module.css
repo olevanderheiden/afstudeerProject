@@ -8,6 +8,15 @@
   box-sizing: border-box;
 }
 
+h1 {
+  font-size: 46px;
+  line-height: 53px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #111;
+}
+
 .layout {
   display: flex;
   flex-direction: row;

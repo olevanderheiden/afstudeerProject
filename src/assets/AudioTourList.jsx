@@ -246,6 +246,7 @@ function AudioTourList() {
 
   return (
     <main className={styles.main}>
+      <h1>Audio rondleiding Digitaal Toegankelijk</h1>
       <div className={styles.layout}>
         <div className={styles.leftCol}>
           <button

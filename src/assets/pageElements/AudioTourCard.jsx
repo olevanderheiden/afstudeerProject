@@ -112,8 +112,8 @@ const AudioTourCard = ({
           alt={`Afbeelding van ${item.name}`}
         />
       ) : null}
-      {item.functie && <p className={styles.cardFunctie}>{item.functie}</p>}
-      <p className={styles.cardName}>{item.name}</p>
+      {item.functie && <h4 className={styles.cardFunctie}>{item.functie}</h4>}
+      <h3 className={styles.cardName}>{item.name}</h3>
 
       {isTourPlaying && isActive && (
         <div className={styles.nowPlaying}>Nu aan het spelen (tour)</div>
