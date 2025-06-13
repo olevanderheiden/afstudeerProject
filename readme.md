@@ -1,12 +1,15 @@
-# React + Vite
+# Audio Tour Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dit project gebruikt **WordPress** als backend (voor contentbeheer) en **React (Vite)** als frontend.
 
-Currently, two official plugins are available:
+## Ontwikkeling
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **WordPress**: Draait op een server van mijn opdracht gever en is niet (meer) te vinden in dit project, check audio test verise voor hoe de word press bestanden er uit zagen.)
+- **React FrontEnd**:
+  - Ontwikkel build met `npm run dev`.
+  - Build voor productie met `npm run host`. Dit zet het ook op github pages
 
-## Expanding the ESLint configuration
+## Opmerkingen
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- De frontend haalt content op via de WordPress REST API.
+- WordPress kan niet op GitHub Pages worden gehost; alleen de statische frontend kan dat.
