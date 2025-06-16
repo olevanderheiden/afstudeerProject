@@ -241,7 +241,30 @@ function AudioTourList() {
     }
   };
 
-  if (error) return <div>Error: {error}</div>;
+  if (error)
+    return (
+      <div className={styles.errorCentering}>
+        <div className={styles.errorContainer}>
+          <div>
+            Het is niet gelukt om de audio rondleidingen te laden.
+            <br />
+            Probeer het nog eens of neem contact op met de beheerder.
+          </div>
+          <div
+            style={{
+              margin: "1.5rem 0 0 0",
+              fontWeight: 400,
+              fontSize: "1.1rem",
+            }}
+          >
+            {error}
+          </div>
+          <button onClick={() => window.location.reload()}>
+            Opnieuw proberen
+          </button>
+        </div>
+      </div>
+    );
   if (!tours.length) return <LoadingBar />;
 
   return (
