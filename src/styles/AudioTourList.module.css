@@ -23,20 +23,18 @@ h1 {
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  gap: 32px;
-  min-height: 60vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
   box-sizing: border-box;
 }
-
 .leftCol {
   min-width: 180px;
+  max-width: 260px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-top: 8px;
-  margin-left: 0;
-  position: sticky;
-  left: 0;
 }
 
 .tourStartenBtn {
@@ -59,11 +57,12 @@ h1 {
 }
 
 .centerCol {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .errorContainer {
@@ -109,4 +108,20 @@ h1 {
 .errorContainer button:hover,
 .errorContainer button:focus {
   outline: none;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+    align-items: center;
+  }
+  .centerCol {
+    width: 100%;
+    max-width: 100vw;
+  }
+  .leftCol {
+    width: 100%;
+    align-items: center;
+    margin-bottom: 16px;
+  }
 }
