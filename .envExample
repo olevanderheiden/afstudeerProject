@@ -1,1 +1,3 @@
-VITE_WORDPRESS_API_URL=http://backend.test/wp-json/wp/v2
+VITE_WORDPRESS_API_URL=http://mywebsite.test/wp-json/wp/v2
+
+//vervang "my website.test met de naam van de website waar de api data vandaan moet komen.

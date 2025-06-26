@@ -2,6 +2,12 @@
 
 Dit project gebruikt **WordPress** als backend (voor contentbeheer) en **React (Vite)** als frontend.
 
+## Installaite instructies voor ontwikkeling, builden en offline draaien
+
+- Open de terminal en voer het volgende commando uit: "npm install"
+- maak een bestand aan inde hoofd/root map van het project met de naam " .env" kijk naar het bestand ".envExample" om te zien welke syntax er wordt verwacht.
+- Voor lokaal draien voer het volgende commando uit: "npm run dev". Je krijgt een link waar mee je de locaal draiende versie kan bekijken.
+
 ## Mappen Structuur
 
 ```
@@ -40,11 +46,11 @@ Dit project gebruikt **WordPress** als backend (voor contentbeheer) en **React (
 ## Ontwikkeling
 
 - **WordPress**: Draait op een server van mijn opdracht gever en is niet (meer) te vinden in dit project, check audio test verise voor hoe de word press bestanden er uit zagen.)
-- **React FrontEnd**:
+- **React FrontEnd build instructies**:
   - Ontwikkel build met `npm run dev`.
-  - Build voor productie met `npm run host`. Dit zet het ook op github pages
+  - Build voor productie met `npm run host`. Dit zet het ook automatisch op github pages. LET OP! Om te zorgen dat de site werkt op github pages dient de "base" in vite.config.js gelijk te lopen met de naam die de repository heeft op github. Anders zal de website niet worden getoond. Dit geld ook voor eventuele sub domeinen waar dit project op geplaatst kan worden wanneer het naar een meer definieve plaatse overgebracht gaat worden.
 
 ## Opmerkingen
 
 - De frontend haalt content op via de WordPress REST API.
-- WordPress kan niet op GitHub Pages worden gehost; alleen de statische frontend kan dat.
+- WordPress kan niet op GitHub Pages worden gehost; alleen de statische frontend kan dat. Om de Frontend te laten werken dient er een .env bestand aanwezig te zijn in de hoofd map van dit project. Kijk naar .envExample om te kijken welke syntax er wordt verwacht
